@@ -24,7 +24,17 @@ pipeline {
 //             	sh '$BIN/docker login -u $DOCKER_REG_CRED_USR -p $DOCKER_REG_CRED_PSW $DOCKER_REG'
 //             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
 //            }
-//         }  
+//         } 
+        stage('Docker') {
+            steps {
+            	script {
+	            	docker.build "nilaybose/mkubedemo:latest"
+	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
+	  					 sh 'docker push nilaybose/mkubedemo:latest'
+	  				}      			
+                }
+           }
+        } 
         stage('Deploy') {
             steps {
                 echo 'Deploying'
