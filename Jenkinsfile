@@ -18,13 +18,13 @@ pipeline {
                 echo 'Testing'
             }
         }
-        stage('Docker'){
-            steps{
-            	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
-            	sh '$BIN/docker login -u $DOCKER_REG_CRED_USR -p $DOCKER_REG_CRED_PSW $DOCKER_REG'
-            	sh '$BIN/docker push     $DOCKER_IMAGE'           	
-           }
-        }  
+//         stage('Docker'){
+//             steps{
+//             	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
+//             	sh '$BIN/docker login -u $DOCKER_REG_CRED_USR -p $DOCKER_REG_CRED_PSW $DOCKER_REG'
+//             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
+//            }
+//         }  
         stage('Deploy') {
             steps {
                 echo 'Deploying'
