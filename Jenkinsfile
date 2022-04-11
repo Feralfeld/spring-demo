@@ -28,9 +28,9 @@ pipeline {
         stage('Docker') {
             steps {
             	script {
-	            	docker.build "nilaybose/mkubedemo:latest"
+	            	docker.build "feralfeld/spring-demo:latest"
 	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
-	  					 sh 'docker push nilaybose/mkubedemo:latest'
+	  					 sh 'docker push feralfeld/spring-demo:latest'
 	  				}      			
                 }
            }
