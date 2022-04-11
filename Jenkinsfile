@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         maven '3.8.5'
+	jdk 'jdk-11'  
     }
     //options {
     //    skipStagesAfterUnstable()
@@ -25,16 +26,16 @@ pipeline {
 //             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
 //            }
 //         } 
-        stage('Docker') {
-            steps {
-            	script {
-	            	docker.build "feralfeld/spring-demo:latest"
-	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
-	  					 sh 'docker push feralfeld/spring-demo:latest'
-	  				}      			
-                }
-           }
-        } 
+//         stage('Docker') {
+//             steps {
+//             	script {
+// 	            	docker.build "feralfeld/spring-demo:latest"
+// 	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
+// 	  					 sh 'docker push feralfeld/spring-demo:latest'
+// 	  				}      			
+//                 }
+//            }
+//         } 
         stage('Deploy') {
             steps {
                 echo 'Deploying'
