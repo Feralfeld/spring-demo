@@ -36,7 +36,7 @@ pipeline {
 // 	}
         stage('Docker'){
             steps{
-		 sh   'env.PATH = "${dockerHome}/bin:${env.PATH}"'
+		// sh   'env.PATH = "${dockerHome}/bin:${env.PATH}"'
             	sh 'myDocker build -t feralfeld/spring-demo:0.0.3 .'           	
             	sh 'docker login -u feralfeld -p rd2pfz6k'
             	sh 'docker push     feralfeld/spring-demo:0.0.3'           	
