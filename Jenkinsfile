@@ -63,6 +63,7 @@ pipeline {
 	    
 	    stage('Docker') {
 	     steps{
+		     env.PATH = "${dockerHome}/bin:${env.PATH}" 
       		  script {
           		dockerImage = docker.build(imagename)
         		}
