@@ -48,7 +48,7 @@ pipeline {
         stage('Docker'){
             steps{
 
-		sh "docker version"
+		sh "dockerHome/bin docker version"
 		    // 		sh 'mvn dockerfile:build'    
 //             	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
 //             	sh '$BIN/docker login -u $DOCKER_REG_CRED_USR -p $DOCKER_REG_CRED_PSW $DOCKER_REG'
