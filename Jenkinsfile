@@ -7,7 +7,10 @@ pipeline {
 //      PATH = "${dockerHome}/bin:${env.PATH}"
   }
 // 	agent { label 'docker' }
-    agent any
+	 agent {
+        label ‘main-host’
+   }
+//     agent any
     tools {
         maven '3.8.5'
 	dockerTool 'myDocker'    
