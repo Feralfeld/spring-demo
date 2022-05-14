@@ -3,6 +3,8 @@ pipeline {
     imagename = "feralfeld/spring-demo"
     registryCredential = 'feralfeld-dockerhub'
     dockerImage = ''
+    def dockerHome = tool 'myDocker'
+    env.PATH = "${dockerHome}/bin:${env.PATH}"
   }
     agent any
     tools {
@@ -13,10 +15,6 @@ pipeline {
     //    skipStagesAfterUnstable()
     //}
     stages {
-	stage('Initialize'){
-        def dockerHome = tool 'myDocker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
-    }
         stage('Mvn Build') {
             steps {
                 echo 'Building'
