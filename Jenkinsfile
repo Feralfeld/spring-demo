@@ -3,8 +3,8 @@ pipeline {
     imagename = "feralfeld/spring-demo"
     registryCredential = 'feralfeld-dockerhub'
     dockerImage = ''
-//     def dockerHome = tool 'myDocker'
-//     env.PATH = "${dockerHome}/bin:${env.PATH}"
+     def dockerHome = tool 'myDocker'
+     env.PATH = "${dockerHome}/bin:${env.PATH}"
   }
     agent any
     tools {
@@ -27,12 +27,12 @@ pipeline {
                 echo 'Testing'
             }
         }
-	stage('Initialize docker'){
-		steps{
-		def dockerHome = tool 'myDocker'  
-		env.PATH = "${dockerHome}/bin:${env.PATH}" 
-		}
-	}
+// 	stage('Initialize docker'){
+// 		steps{
+// 		def dockerHome = tool 'myDocker'  
+// 		env.PATH = "${dockerHome}/bin:${env.PATH}" 
+// 		}
+// 	}
         stage('Docker'){
             steps{
             	sh 'docker build -t feralfeld/spring-demo:0.0.3 .'           	
