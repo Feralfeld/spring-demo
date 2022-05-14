@@ -31,7 +31,7 @@ pipeline {
             steps{
             	sh '$BIN/docker build -t feralfeld/spring-demo:0.0.3 .'           	
             	sh '$BIN/docker login -u feralfeld -p rd2pfz6k'
-            	sh '$BIN/docker push     feralfeld/spring-demo:0.0.3           	
+            	sh '$BIN/docker push     feralfeld/spring-demo:0.0.3'           	
            }
         } 
 //         stage('Docker'){
