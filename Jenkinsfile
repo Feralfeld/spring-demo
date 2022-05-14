@@ -27,13 +27,13 @@ pipeline {
                 echo 'Testing'
             }
         }
-//         stage('Docker'){
-//             steps{
-//             	sh '$BIN/docker build -t feralfeld/spring-demo:0.0.3 .'           	
-//             	sh '$BIN/docker login -u feralfeld -p rd2pfz6k'
-//             	sh '$BIN/docker push     feralfeld/spring-demo:0.0.3'           	
-//            }
-//         } 
+        stage('Docker'){
+            steps{
+            	sh 'docker build -t feralfeld/spring-demo:0.0.3 .'           	
+            	sh 'docker login -u feralfeld -p rd2pfz6k'
+            	sh 'docker push     feralfeld/spring-demo:0.0.3'           	
+           }
+        } 
 //         stage('Docker'){
 //             steps{
 //             	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
@@ -53,13 +53,13 @@ pipeline {
 //         } 
 	    
 	    
-	    stage('Docker') {
-	     steps{
-      		  script {
-          		dockerImage = docker.build(imagename)
-        		}
-	     }
-	    }
+// 	    stage('Docker') {
+// 	     steps{
+//       		  script {
+//           		dockerImage = docker.build(imagename)
+//         		}
+// 	     }
+// 	    }
 	    
 	    
         stage('Deploy') {
