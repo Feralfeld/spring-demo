@@ -4,9 +4,10 @@ pipeline {
     registryCredential = 'feralfeld-dockerhub'
     dockerImage = ''
      def dockerHome = tool 'myDocker'
-     env.PATH = "${dockerHome}/bin:${env.PATH}"
+//      env.PATH = "${dockerHome}/bin:${env.PATH}"
   }
-    agent any
+	agent { label 'docker' }
+//     agent any
     tools {
         maven '3.8.5'
 // 	dockerTool 'myDocker'    
