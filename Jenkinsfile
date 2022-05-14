@@ -19,13 +19,13 @@ pipeline {
                 echo 'Testing'
             }
         }
-        stage('Docker'){
-            steps{
-            	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
-            	sh '$BIN/docker login -u feralfeld -p rd2pfz6k'
-            	sh '$BIN/docker push     $DOCKER_IMAGE'           	
-           }
-        } 
+//         stage('Docker'){
+//             steps{
+//             	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
+//             	sh '$BIN/docker login -u feralfeld -p rd2pfz6k'
+//             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
+//            }
+//         } 
 //         stage('Docker'){
 //             steps{
 //             	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
@@ -33,16 +33,16 @@ pipeline {
 //             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
 //            }
 //         } 
-//         stage('Docker') {
-//             steps {
-//             	script {
-// 	            	docker.build "feralfeld/spring-demo:latest"
-// 	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
-// 	  					 sh 'docker push feralfeld/spring-demo:latest'
-// 	  				}      			
-//                 }
-//            }
-//         } 
+        stage('Docker') {
+            steps {
+            	script {
+	            	docker.build "feralfeld/spring-demo:latest"
+	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
+	  					 sh 'docker push feralfeld/spring-demo:latest'
+	  				}      			
+                }
+           }
+        } 
         stage('Deploy') {
             steps {
                 echo 'Deploying'
