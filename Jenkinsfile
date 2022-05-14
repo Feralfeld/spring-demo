@@ -9,7 +9,7 @@ pipeline {
     agent any
     tools {
         maven '3.8.5'
-	docker 'myDocker'    
+	dockerTool 'myDocker'    
 // 	jdk 'jdk-11'  
     }
     //options {
