@@ -10,7 +10,7 @@ pipeline {
     agent any
     tools {
         maven '3.8.5'
-// 	dockerTool 'myDocker'    
+	dockerTool 'myDocker'    
 // 	jdk 'jdk-11'  
     }
     //options {
@@ -36,6 +36,7 @@ pipeline {
 // 	}
         stage('Docker'){
             steps{
+		    env.PATH = "${dockerHome}/bin:${env.PATH}"
             	sh 'docker build -t feralfeld/spring-demo:0.0.3 .'           	
             	sh 'docker login -u feralfeld -p rd2pfz6k'
             	sh 'docker push     feralfeld/spring-demo:0.0.3'           	
