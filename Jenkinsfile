@@ -1,4 +1,9 @@
 pipeline {
+  environment {
+    imagename = "feralfeld/spring-demo"
+    registryCredential = 'feralfeld-dockerhub'
+    dockerImage = ''
+  }
     agent any
     tools {
         maven '3.8.5'
@@ -33,16 +38,23 @@ pipeline {
 //             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
 //            }
 //         } 
-        stage('Docker') {
-            steps {
-            	script {
-	            	docker.build "feralfeld/spring-demo:latest"
-	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
-	  					 sh 'docker push feralfeld/spring-demo:latest'
-	  				}      			
-                }
-           }
-        } 
+//         stage('Docker') {
+//             steps {
+//             	script {
+// 	            	docker.build "feralfeld/spring-demo:latest"
+// 	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
+// 	  					 sh 'docker push feralfeld/spring-demo:latest'
+// 	  				}      			
+//                 }
+//            }
+//         } 
+	    stage('Docker') {
+	     steps{
+      		  script {
+          		dockerImage = docker.build imagename
+        		}
+	     }
+	    }
         stage('Deploy') {
             steps {
                 echo 'Deploying'
