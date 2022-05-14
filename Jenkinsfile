@@ -3,12 +3,13 @@ pipeline {
     imagename = "feralfeld/spring-demo"
     registryCredential = 'feralfeld-dockerhub'
     dockerImage = ''
-    def dockerHome = tool 'myDocker'
-    env.PATH = "${dockerHome}/bin:${env.PATH}"
+//     def dockerHome = tool 'myDocker'
+//     env.PATH = "${dockerHome}/bin:${env.PATH}"
   }
     agent any
     tools {
         maven '3.8.5'
+	docker 'myDocker'    
 // 	jdk 'jdk-11'  
     }
     //options {
