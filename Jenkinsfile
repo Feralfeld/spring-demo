@@ -13,7 +13,7 @@ pipeline {
 //     }
     tools {
         maven '3.8.5'
-	dockerTool 'myDocker'    
+// 	dockerTool 'myDocker'    
 // 	jdk 'jdk-11'  
     }
     //options {
