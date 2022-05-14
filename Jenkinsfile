@@ -7,10 +7,10 @@ pipeline {
 //      PATH = "${dockerHome}/bin:${env.PATH}"
   }
 // 	agent { label 'docker' }
-//     agent any
-	agent {
-        docker { image 'openjdk:11' }
-    }
+    agent any
+// 	agent {
+//         docker { image 'openjdk:11' }
+//     }
     tools {
         maven '3.8.5'
 	dockerTool 'myDocker'    
