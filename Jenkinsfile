@@ -8,7 +8,7 @@ pipeline {
   }
 // 	agent { label 'docker' }
 	 agent {
-        label ‘main-host’
+        label ‘root’
    }
 //     agent any
     tools {
