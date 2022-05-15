@@ -44,25 +44,26 @@ pipeline {
 	    
 	  stage ('Kubernetes Deploy') {
             steps {
-                sh 'kubectl apply -f deploy/kubernetes.yml'
+//                 sh 'kubectl apply -f deploy/kubernetes.yml'
 //            	--kubeconfig=/etc/mk8s/kube.config
 		    
 		    
-		       def clusterNamespace = 'geeksapp'
-                    def springProfile = 'dev'
-                    def kubeOptions = [clusterName: 'kubernetes', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.3.54:6443']
-                    withKubeCredentials(kubectlCredentials: [kubeOptions]){
-                        echo "Deploying yaml to ${clusterNamespace}"
-                        sh "sed -i 's|ImageName|${ImageName}|' Deployment/template.yaml"
-            		sh """sed -i "s|NAMESPACE|${clusterNamespace}|" Deployment/template.yaml"""
-                        sh """sed -i "s|APP|${appName}|" Deployment/test.yaml"""
-                        sh """sed -i "s|SERVICENAME|${deployServiceName}|" Deployment/template.yaml"""
-                        sh """sed -i "s|PORTNAME|${servicePortName}|" Deployment/template.yaml"""
-                        sh """sed -i "s|PORT|${servicePort}|" Deployment/template.yaml"""
-                        sh """sed -i "s|SPRINGPROFILE|${springProfile}|" Deployment/template.yaml"""
-                        sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" Deployment/template.yaml"""
-                        sh "kubectl apply -f Deployment/template.yaml"
-                        sh "docker rmi ${ImageName}"
+// 		       def clusterNamespace = 'geeksapp'
+//                     def springProfile = 'dev'
+//                     def kubeOptions = [clusterName: 'kubernetes', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.3.54:6443']
+//                     withKubeCredentials(kubectlCredentials: [kubeOptions]){
+                        echo "Deploying yaml"
+		    	sh "cat deployment.yaml"
+                        sh "sed -i 's|ImageName|${ImageName}|' deployment.yaml"
+            		sh """sed -i "s|NAMESPACE|${clusterNamespace}|" deployment.yaml"""
+                        sh """sed -i "s|APP|${appName}|" deployment.yaml"""
+                        sh """sed -i "s|SERVICENAME|${deployServiceName}|" deployment.yaml"""
+                        sh """sed -i "s|PORTNAME|${servicePortName}|" deployment.yaml"""
+                        sh """sed -i "s|PORT|${servicePort}|" deployment.yaml"""
+                        sh """sed -i "s|SPRINGPROFILE|${springProfile}|" deployment.yaml"""
+                        sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" deployment.yaml"""
+                        sh "kubectl apply -f deployment.yaml.yaml"
+//                         sh "docker rmi ${ImageName}"
         
 		    
 	    }
