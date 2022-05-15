@@ -50,9 +50,9 @@ pipeline {
 
 		sh "docker version"
 // 		   sh 'mvn dockerfile:build'    
-            	sh '$BIN/docker build -t $DOCKER_IMAGE .'           	
-//             	sh '$BIN/docker login -u $DOCKER_REG_CRED_USR -p $DOCKER_REG_CRED_PSW $DOCKER_REG'
-//             	sh '$BIN/docker push     $DOCKER_IMAGE'           	
+            	sh 'docker buildx build --platform=linux/amd64 -t feralfeld/spring-demo:0.0.3 .'           	
+             	sh 'docker login -u feralfeld -p rd2pfz6k '
+             	sh 'docker push feralfeld/spring-demo:0.0.3'           	
            }
         } 
 //         stage('Docker') {
