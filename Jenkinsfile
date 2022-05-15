@@ -22,32 +22,32 @@ pipeline {
 	
     stages {
 	    
-        stage('Mvn Build') {
-            steps {
-		    echo "${IMAGE} COM VERSÃO ${VERSION}"
-                echo 'Building'
-                sh 'mvn -Dmaven.test.failure.ignore=true package'
-            }
-        }
+//         stage('Mvn Build') {
+//             steps {
+// 		    echo "${IMAGE} COM VERSÃO ${VERSION}"
+//                 echo 'Building'
+//                 sh 'mvn -Dmaven.test.failure.ignore=true package'
+//             }
+//         }
         stage('Test') {
             steps {
                 echo 'Testing'
             }
         }
-        stage('Docker'){
-            steps{
-		sh "docker version"  
-            	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
-		sh "docker login -u feralfeld -p ${variavel}"
-             	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
-           }
-        }     
-        stage('Deploy') {
-            steps {
-                echo 'Deploying'
-//                 sh 'kubectl create -f $DEPLOYMENT_FILE --record'
-            }
-        }
+//         stage('Docker'){
+//             steps{
+// 		sh "docker version"  
+//             	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
+// 		sh "docker login -u feralfeld -p ${variavel}"
+//              	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
+//            }
+//         }     
+//         stage('Deploy') {
+//             steps {
+//                 echo 'Deploying'
+// //                 sh 'kubectl create -f $DEPLOYMENT_FILE --record'
+//             }
+//         }
 	    
 	  stage ('Kubernetes Deploy') {
             steps {
