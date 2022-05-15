@@ -80,7 +80,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying'
-                sh '$BIN/kubectl create -f $DEPLOYMENT_FILE --record'
+//                 sh 'kubectl create -f $DEPLOYMENT_FILE --record'
             }
         }
     }
