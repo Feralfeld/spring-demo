@@ -11,35 +11,24 @@ spec:
     matchLabels:
       app: APP
   replicas: 1
-  minReadySeconds: 15
   template:
     metadata:
       labels:
         app: APP
     spec:
-      volumes:
-        - name: timezone-configuration
-          hostPath:
-            path: /usr/share/zoneinfo/Africa/Nairobi
       containers:
         - name: APP
           image: ImageName
           ports:
             - containerPort: PORT
           imagePullPolicy: IfNotPresent
-          env:
-           - name: SPRING_PROFILES_ACTIVE
-             value: SPRINGPROFILE
-           - name: TZ
-             value: Africa/Nairobi          
-          volumeMounts:
-          - name: timezone-configuration
-            mountPath: /etc/localtime
-      dnsPolicy: ClusterFirst
-      dnsConfig:
-        nameservers:
-          - 192.168.3.215
-          - 8.8.8.8            
+#           env:
+#            - name: TZ
+#              value: Africa/Nairobi          
+#           volumeMounts:
+#           - name: timezone-configuration
+#             mountPath: /etc/localtime
+        
 ---
 apiVersion: v1
 kind: Service
@@ -54,5 +43,6 @@ spec:
     - name: PORTNAME
       port: PORT
       protocol: TCP
+      nodePort: NODEPORT
   selector:
     app: APP
