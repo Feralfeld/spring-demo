@@ -53,9 +53,9 @@ pipeline {
 
 		sh "docker version"
 // 		   sh 'mvn dockerfile:build'    
-            	sh 'docker build -t feralfeld/spring-demo:0.0.3 .'           	
+            	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
 		sh "docker login -u feralfeld -p ${variavel}"
-             	sh 'docker push feralfeld/spring-demo:0.0.3'           	
+             	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
            }
         } 
 //         stage('Docker') {
