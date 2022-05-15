@@ -34,7 +34,7 @@ pipeline {
             steps {
                echo "Preparing Dockerfile"
 		    	sh "cat Dockerfile"
-		        sh "sed -i 's|IMAGENAME|${ImageName}-${VERSION}|' Dockerfile"
+		        sh "sed -i 's|IMAGENAME|${IMAGE}-${VERSION}|' Dockerfile"
 		    	echo "Dockerfile MODIFICADO"
 		   	sh "cat Dockerfile"
             }
@@ -48,7 +48,7 @@ pipeline {
 	    
         stage('Docker'){
             steps{
-		sh "docker version"  
+// 		sh "docker version"  
             	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
 		sh "docker login -u feralfeld -p ${variavel}"
              	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
