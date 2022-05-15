@@ -69,6 +69,8 @@ pipeline {
                         sh """sed -i "s|PORT|${servicePort}|" deployment.yaml"""
 		    	sh """sed -i "s|NODEPORT|${nodePort}|" deployment.yaml"""
                         sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" deployment.yaml"""
+		    	echo "Deploying MODIFICADO"
+		   	sh "cat deployment.yaml"
                         sh "kubectl apply -f deployment.yaml.yaml"
 //                         sh "docker rmi ${ImageName}"
         
