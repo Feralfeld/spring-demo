@@ -69,8 +69,8 @@ pipeline {
                         sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" deployment.yaml"""
 		    	echo "Deploying MODIFICADO"
 		   	sh "cat deployment.yaml"
-		    	sh "./kubectl version"
-                        sh "./kubectl apply -f deployment.yaml.yaml"
+		    	sh "/usr/bin/kubectl version version"
+                        sh "/usr/bin/kubectl version apply -f deployment.yaml.yaml"
 //                         sh "docker rmi ${ImageName}"
 		     
 		    
