@@ -3,6 +3,8 @@ pipeline {
     imagename = "feralfeld/spring-demo"
     registryCredential = 'feralfeld-dockerhub'		  
     dockerImage = ''
+    IMAGE = readMavenPom().getArtifactId()
+    VERSION = readMavenPom().getVersion()
 //      def dockerHome = tool 'myDocker'
 //      PATH = "${dockerHome}/bin:${env.PATH}"
   }
@@ -22,7 +24,7 @@ pipeline {
     stages {
         stage('Mvn Build') {
             steps {
-		 echo "testando a variavel ${variavel}"    
+		    echo "${IMAGE} COM VERSÃO ${VERSION}"
                 echo 'Building'
                 sh 'mvn -Dmaven.test.failure.ignore=true package'
             }
