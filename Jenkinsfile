@@ -29,11 +29,23 @@ pipeline {
                 sh 'mvn -Dmaven.test.failure.ignore=true package'
             }
         }
+	    
+	stage('Prepare Dockerfile') {
+            steps {
+               echo "Preparing Dockerfile"
+		    	sh "cat Dockerfile"
+		        sh "sed -i 's|IMAGENAME|${ImageName}-${VERSION}|' Dockerfile"
+		    	echo "Dockerfile MODIFICADO"
+		   	sh "cat Dockerfile"
+            }
+        }
+	    
         stage('Test') {
             steps {
                 echo 'Testing'
             }
         }
+	    
         stage('Docker'){
             steps{
 		sh "docker version"  
@@ -58,7 +70,6 @@ pipeline {
 //                      def kubeOptions = [clusterName: 'debian-server', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.100.232:6443']
 //                      withKubeCredentials(kubectlCredentials: [kubeOptions]){
                         echo "Deploying yaml"
-		    	sh "cat deployment.yaml"
 		        sh "sed -i 's|ImageName|${ImageName}:${VERSION}|' deployment.yaml"
             		sh """sed -i "s|NAMESPACE|${clusterNamespace}|" deployment.yaml"""
                         sh """sed -i "s|APP|${appName}|" deployment.yaml"""
@@ -69,8 +80,6 @@ pipeline {
                         sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" deployment.yaml"""
 		    	echo "Deploying MODIFICADO"
 		   	sh "cat deployment.yaml"
-		    	sh "ls"
-		    	sh "/usr/bin/kubectl version"
                         sh "/usr/bin/kubectl apply -f deployment.yaml"
 //                         sh "docker rmi ${ImageName}"
 		     
