@@ -55,10 +55,8 @@ pipeline {
 //            	--kubeconfig=/etc/mk8s/kube.config
 		    
 		    
-// 		       def clusterNamespace = 'geeksapp'
-//                     def springProfile = 'dev'
-//                     def kubeOptions = [clusterName: 'kubernetes', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.3.54:6443']
-//                     withKubeCredentials(kubectlCredentials: [kubeOptions]){
+                     def kubeOptions = [clusterName: 'debian-server', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.100.232:6443']
+                     withKubeCredentials(kubectlCredentials: [kubeOptions]){
                         echo "Deploying yaml"
 		    	sh "cat deployment.yaml"
 		        sh "sed -i 's|ImageName|${ImageName}:${VERSION}|' deployment.yaml"
@@ -73,7 +71,7 @@ pipeline {
 		   	sh "cat deployment.yaml"
                         sh "kubectl apply -f deployment.yaml.yaml"
 //                         sh "docker rmi ${ImageName}"
-        
+		     }
 		    
 	    }
         }	    
