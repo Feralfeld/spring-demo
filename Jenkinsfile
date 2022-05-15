@@ -6,7 +6,7 @@ pipeline {
     appName = "spring-demo"
     deployServiceName = "spring-demo-service"
     servicePortName = "http"
-    servicePort = "8888"
+    servicePort = "8800"
     deploymentName = "spring-demo-deployment"
     nodePort = "32100"		  
     dockerImage = ''
@@ -22,26 +22,26 @@ pipeline {
 	
     stages {
 	    
-//         stage('Mvn Build') {
-//             steps {
-// 		    echo "${IMAGE} COM VERSÃO ${VERSION}"
-//                 echo 'Building'
-//                 sh 'mvn -Dmaven.test.failure.ignore=true package'
-//             }
-//         }
+        stage('Mvn Build') {
+            steps {
+		    echo "${IMAGE} COM VERSÃO ${VERSION}"
+                echo 'Building'
+                sh 'mvn -Dmaven.test.failure.ignore=true package'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Testing'
             }
         }
-//         stage('Docker'){
-//             steps{
-// 		sh "docker version"  
-//             	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
-// 		sh "docker login -u feralfeld -p ${variavel}"
-//              	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
-//            }
-//         }     
+        stage('Docker'){
+            steps{
+		sh "docker version"  
+            	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
+		sh "docker login -u feralfeld -p ${variavel}"
+             	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
+           }
+        }     
 //         stage('Deploy') {
 //             steps {
 //                 echo 'Deploying'
