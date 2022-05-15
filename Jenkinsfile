@@ -71,7 +71,7 @@ pipeline {
 		   	sh "cat deployment.yaml"
 		    	sh "ls"
 		    	sh "/usr/bin/kubectl version"
-                        sh "/usr/bin/kubectl version apply -f deployment.yaml.yaml"
+                        sh "/usr/bin/kubectl apply -f deployment.yaml"
 //                         sh "docker rmi ${ImageName}"
 		     
 		    
