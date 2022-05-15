@@ -55,8 +55,8 @@ pipeline {
 //            	--kubeconfig=/etc/mk8s/kube.config
 		    
 		    
-                     def kubeOptions = [clusterName: 'debian-server', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.100.232:6443']
-                     withKubeCredentials(kubectlCredentials: [kubeOptions]){
+//                      def kubeOptions = [clusterName: 'debian-server', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.100.232:6443']
+//                      withKubeCredentials(kubectlCredentials: [kubeOptions]){
                         echo "Deploying yaml"
 		    	sh "cat deployment.yaml"
 		        sh "sed -i 's|ImageName|${ImageName}:${VERSION}|' deployment.yaml"
@@ -69,9 +69,10 @@ pipeline {
                         sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" deployment.yaml"""
 		    	echo "Deploying MODIFICADO"
 		   	sh "cat deployment.yaml"
-                        sh "kubectl apply -f deployment.yaml.yaml"
+		    	sh "./kubectl version"
+                        sh "./kubectl apply -f deployment.yaml.yaml"
 //                         sh "docker rmi ${ImageName}"
-		     }
+		     
 		    
 	    }
         }	    
