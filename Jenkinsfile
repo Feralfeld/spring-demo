@@ -1,7 +1,7 @@
 pipeline {
   environment {
     imagename = "feralfeld/spring-demo"
-    registryCredential = 'feralfeld-dockerhub'
+    registryCredential = 'feralfeld-dockerhub'		  
     dockerImage = ''
 //      def dockerHome = tool 'myDocker'
 //      PATH = "${dockerHome}/bin:${env.PATH}"
@@ -22,6 +22,7 @@ pipeline {
     stages {
         stage('Mvn Build') {
             steps {
+		 echo "testando a variavel ${variavel}"    
                 echo 'Building'
                 sh 'mvn -Dmaven.test.failure.ignore=true package'
             }
@@ -51,7 +52,7 @@ pipeline {
 		sh "docker version"
 // 		   sh 'mvn dockerfile:build'    
             	sh 'docker build -t feralfeld/spring-demo:0.0.3 .'           	
-             	sh 'docker login -u feralfeld -p rd2pfz6k@'
+		sh "docker login -u feralfeld -p ${variavel}"
              	sh 'docker push feralfeld/spring-demo:0.0.3'           	
            }
         } 
