@@ -8,20 +8,13 @@ pipeline {
 //      def dockerHome = tool 'myDocker'
 //      PATH = "${dockerHome}/bin:${env.PATH}"
   }
-// 	agent { label 'docker' }
     agent any
-// 	agent {
-//         docker { image 'openjdk:11' }
-//     }
     tools {
         maven '3.8.5'
-// 	dockerTool 'myDocker'    
-// 	jdk 'jdk-11'  
     }
-    //options {
-    //    skipStagesAfterUnstable()
-    //}
+	
     stages {
+	    
         stage('Mvn Build') {
             steps {
 		    echo "${IMAGE} COM VERSÃO ${VERSION}"
@@ -34,56 +27,47 @@ pipeline {
                 echo 'Testing'
             }
         }
-// 	stage('Initialize docker'){
-// 		steps{
-// 		def dockerHome = tool 'myDocker'  
-// 		env.PATH = "${dockerHome}/bin:${env.PATH}" 
-// 		}
-// 	}
-//         stage('Docker'){
-//             steps{
-// 		echo '${dockerHome}/bin:${env.PATH}'
-//             	sh 'dockerHome build -t feralfeld/spring-demo:0.0.3 .'           	
-//             	sh 'docker login -u feralfeld -p rd2pfz6k'
-//             	sh 'docker push     feralfeld/spring-demo:0.0.3'           	
-//            }
-//         } 
         stage('Docker'){
             steps{
-
-		sh "docker version"
-// 		   sh 'mvn dockerfile:build'    
+		sh "docker version"  
             	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
 		sh "docker login -u feralfeld -p ${variavel}"
              	sh "docker push feralfeld/${IMAGE}:${VERSION}"           	
            }
-        } 
-//         stage('Docker') {
-//             steps {
-//             	script {
-// 	            	docker.build "feralfeld/spring-demo:latest"
-// 	  				withDockerRegistry([ credentialsId: "gitdocker", url: "" ]) {
-// 	  					 sh 'docker push feralfeld/spring-demo:latest'
-// 	  				}      			
-//                 }
-//            }
-//         } 
-	    
-	    
-// 	    stage('Docker') {
-// 	     steps{
-//       		  script {
-//           		dockerImage = docker.build(imagename)
-//         		}
-// 	     }
-// 	    }
-	    
-	    
+        }     
         stage('Deploy') {
             steps {
                 echo 'Deploying'
 //                 sh 'kubectl create -f $DEPLOYMENT_FILE --record'
             }
         }
+	    
+	  stage ('Kubernetes Deploy') {
+            steps {
+                sh 'kubectl apply -f deploy/kubernetes.yml'
+//            	--kubeconfig=/etc/mk8s/kube.config
+		    
+		    
+		       def clusterNamespace = 'geeksapp'
+                    def springProfile = 'dev'
+                    def kubeOptions = [clusterName: 'kubernetes', credentialsId: 'KubeSecret', serverUrl: 'https://192.168.3.54:6443']
+                    withKubeCredentials(kubectlCredentials: [kubeOptions]){
+                        echo "Deploying yaml to ${clusterNamespace}"
+                        sh "sed -i 's|ImageName|${ImageName}|' Deployment/template.yaml"
+            		sh """sed -i "s|NAMESPACE|${clusterNamespace}|" Deployment/template.yaml"""
+                        sh """sed -i "s|APP|${appName}|" Deployment/test.yaml"""
+                        sh """sed -i "s|SERVICENAME|${deployServiceName}|" Deployment/template.yaml"""
+                        sh """sed -i "s|PORTNAME|${servicePortName}|" Deployment/template.yaml"""
+                        sh """sed -i "s|PORT|${servicePort}|" Deployment/template.yaml"""
+                        sh """sed -i "s|SPRINGPROFILE|${springProfile}|" Deployment/template.yaml"""
+                        sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" Deployment/template.yaml"""
+                        sh "kubectl apply -f Deployment/template.yaml"
+                        sh "docker rmi ${ImageName}"
+        
+		    
+	    }
+        }	    
+	    
+	    
     }
 }
