@@ -40,13 +40,13 @@ pipeline {
             }
         }
 	    
-        stage('Test') {
-            steps {
-                echo 'Testing'
-            }
-        }
+//         stage('Test') {
+//             steps {
+//                 echo 'Testing'
+//             }
+//         }
 	    
-        stage('Docker'){
+        stage('Docker Build'){
             steps{
 // 		sh "docker version"  
             	sh "docker build -t feralfeld/${IMAGE}:${VERSION} ."           	
