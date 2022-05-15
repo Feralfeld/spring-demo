@@ -1,7 +1,14 @@
 pipeline {
   environment {
     imagename = "feralfeld/spring-demo"
-    registryCredential = 'feralfeld-dockerhub'		  
+    clusterNamespace = "applications"
+    registryCredential = 'feralfeld-dockerhub'	
+    appName = "spring-demo"
+    deployServiceName = "spring-demo-service"
+    servicePortName = "http"
+    servicePort = "8888"
+    deploymentName = "spring-demo-deployment"
+    nodePort = "32100"		  
     dockerImage = ''
     IMAGE = readMavenPom().getArtifactId()
     VERSION = readMavenPom().getVersion()
@@ -54,13 +61,13 @@ pipeline {
 //                     withKubeCredentials(kubectlCredentials: [kubeOptions]){
                         echo "Deploying yaml"
 		    	sh "cat deployment.yaml"
-                        sh "sed -i 's|ImageName|${ImageName}|' deployment.yaml"
+		        sh "sed -i 's|ImageName|${ImageName}:${VERSION}|' deployment.yaml"
             		sh """sed -i "s|NAMESPACE|${clusterNamespace}|" deployment.yaml"""
                         sh """sed -i "s|APP|${appName}|" deployment.yaml"""
                         sh """sed -i "s|SERVICENAME|${deployServiceName}|" deployment.yaml"""
                         sh """sed -i "s|PORTNAME|${servicePortName}|" deployment.yaml"""
                         sh """sed -i "s|PORT|${servicePort}|" deployment.yaml"""
-                        sh """sed -i "s|SPRINGPROFILE|${springProfile}|" deployment.yaml"""
+		    	sh """sed -i "s|NODEPORT|${nodePort}|" deployment.yaml"""
                         sh """sed -i "s|DEPLOYMENTNAME|${deploymentName}|" deployment.yaml"""
                         sh "kubectl apply -f deployment.yaml.yaml"
 //                         sh "docker rmi ${ImageName}"
